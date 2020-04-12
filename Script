@@ -1,0 +1,74 @@
+<html>
+<canvas id="gameCan" width="800" height = "600"></canvas>
+<script>
+	
+var canvas;
+var canvasContext;
+var BALLLENGTH = 10;
+var BALLHEIGHT= 10;
+var ballX = 50;
+var ballY = 50;
+var ballVelX = 5;
+var ballVelY = 5;
+var paddle1Y = 200;
+var paddle2Y = 200;
+var PADDLELENGTH = 10;
+var PADDLEHEIGHT = 100;
+
+var black = "#000000";
+var red = "#FF0000";
+var green = "#00FF00";
+var blue = "#0000FF";
+var white = "#FFFFFF";
+
+window.onload = function() {
+	var FRAMERATE = 30;
+	
+	canvas = document.getElementById("gameCan");
+	canvasContext = canvas.getContext("2d");
+	
+	setInterval(function() {
+		moveAll();
+		drawAll();
+	}, 1000/FRAMERATE);
+}
+function drawAll() {
+	var paddle1X = 5;
+	var paddle2X = canvas.width - PADDLELENGTH - 5;
+	drawRect(0, 0, canvas.width, canvas.height, black);
+	drawRect(ballX, ballY, BALLLENGTH, BALLHEIGHT, red);
+	drawRect(paddle1X, paddle1Y, PADDLELENGTH, PADDLEHEIGHT, white);
+	drawRect(paddle2X, paddle2Y, PADDLELENGTH, PADDLEHEIGHT, white);
+	console.log(event)
+}
+function moveAll() {
+	ballX += ballVelX;
+	ballY += ballVelY;
+	paddle2Y = ballY-PADDLEHEIGHT/2+BALLHEIGHT/2;
+	if(ballX > canvas.width-BALLLENGTH-PADDLELENGTH-5) {
+		ballVelX = -ballVelX;
+	}
+	if(ballX < 0 + PADDLELENGTH + 5) {
+		ballVelX = -ballVelX;
+	}
+	if(ballY > canvas.height-BALLHEIGHT) {
+		ballVelY = -ballVelY;
+	}
+	if(ballY < 0) {
+		ballVelY = -ballVelY;
+	}
+}
+function changeColor(color) {
+	canvasContext.fillStyle = color;
+}
+function drawRect(x, y, len, hgt, color) {
+	changeColor(color)
+	canvasContext.fillRect(x, y, len, hgt)
+}
+
+</script>
+</html>
+
+
+
+
